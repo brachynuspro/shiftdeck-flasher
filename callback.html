@@ -46,6 +46,13 @@ p{color:#B3B3B3;font-size:14px;line-height:1.5;margin-bottom:18px}
     <div class="foot">Se a página da ShiftDeck não abrir, confira se o celular está no mesmo Wi-Fi.
       Ou copie o código e cole na página da ShiftDeck.</div>
   </div>
+  <div id="info" class="hidden">
+    <h1>Página de retorno do login</h1>
+    <p>Ela abre sozinha quando você autoriza o Spotify pela ShiftDeck. Não precisa fazer nada aqui.</p>
+    <p>No app do <a href="https://developer.spotify.com/dashboard" style="color:#1ED760">Spotify Dashboard</a>,
+      em Redirect URIs, cadastre exatamente:</p>
+    <div class="code" id="self"></div>
+  </div>
   <div id="fail" class="hidden">
     <h1 class="err">Não deu certo</h1>
     <p id="why"></p>
@@ -59,6 +66,11 @@ p{color:#B3B3B3;font-size:14px;line-height:1.5;margin-bottom:18px}
   // Only addresses on a home network: keeps this page from redirecting anywhere else.
   var lan = /^(10\.\d{1,3}|172\.(1[6-9]|2\d|3[01])|192\.168)\.\d{1,3}\.\d{1,3}$/.test(ip);
   function show(id) { document.getElementById(id).classList.remove("hidden"); }
+  if (!code && !err && !ip) {                     // opened directly, not coming from Spotify
+    document.getElementById("self").textContent = location.origin + location.pathname;
+    show("info");
+    return;
+  }
   if (err || !code || !lan) {
     document.getElementById("why").textContent =
       err === "access_denied" ? "A autorização foi cancelada no Spotify." :
