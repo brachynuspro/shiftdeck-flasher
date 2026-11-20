@@ -77,7 +77,8 @@
   <div class="grid">
     <div class="card">
       <h3>Atualizar</h3>
-      <p>Para quem já usa o ShiftDeck. Mantém Wi-Fi, conta do Spotify e calibração do toque.</p>
+      <p>Para quem já usa o ShiftDeck 1.3 ou mais nova. Mantém Wi-Fi, conta do Spotify e calibração do toque. Daqui em diante a própria placa avisa quando tem versão nova e se atualiza pela internet.</p>
+      <p class="note warn">Vindo da 1.2 ou anterior? Use <b>Instalar do zero</b> uma vez: a memória mudou para permitir as atualizações automáticas.</p>
       <esp-web-install-button manifest="manifest-update.json">
         <button slot="activate" class="btn primary">Atualizar firmware</button>
         <span slot="unsupported"></span>
@@ -104,7 +105,7 @@
       <li>Ao terminar, aperte o botão <b>RST</b> da placa (ou desconecte e reconecte).</li>
       <li>A tela <b>Inicializando</b> mostra Tela, Touch, Wi-Fi, Backend e Spotify. Tudo verde = pronto.</li>
       <li>Sem Wi-Fi configurado, a placa cria a rede <b>Shiftdeck-Spotify</b>: escaneie o QR code da tela com o celular e escolha sua rede.</li>
-      <li>Depois, a tela pede as credenciais do Spotify e a autorização da conta, também por QR code.</li>
+      <li>Depois, a tela pede o Client ID e o Client Secret do seu app no Spotify e a autorização da conta, também por QR code. No app do Spotify, cadastre a Redirect URI <code>https://brachynuspro.github.io/shiftdeck-flasher/callback.html</code>.</li>
       <li>Na tela principal: toque em <b>Wi-Fi</b> para Configurações, em <b>Spotify</b> ou na capa para Playlists, no <b>título da música</b> para Buscar.</li>
     </ul>
   </div>
