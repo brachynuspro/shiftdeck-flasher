@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ShiftDeck · Instalador</title>
+<meta name="description" content="Grave o firmware do ShiftDeck no ESP32-2432S028 direto pelo navegador.">
+<script type="module" src="https://unpkg.com/esp-web-tools@10.4.0/dist/web/install-button.js?module"></script>
+<style>
+  :root {
+    --bg: #111316; --card: #1e1f23; --line: #2c2e33; --text: #fff; --text2: #b3b3b3; --muted: #8a8d93;
+    --green: #1ed760; --green-dark: #1f9d48; --warn: #f5a524; --error: #f15e6c;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.55 Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 32px 16px 64px; }
+  header { display: flex; align-items: center; gap: 14px; margin-bottom: 8px; }
+  header svg { width: 40px; height: 36px; flex: none; }
+  h1 { font-size: 30px; margin: 0; letter-spacing: -0.02em; }
+  .version { display: inline-block; margin-left: 4px; padding: 2px 10px; border-radius: 99px; background: var(--card); color: var(--green); font-size: 14px; font-weight: 600; vertical-align: middle; }
+  .lead { color: var(--text2); margin: 0 0 28px; }
+  h2 { font-size: 19px; margin: 36px 0 12px; display: flex; align-items: center; gap: 10px; }
+  h2 .n { width: 28px; height: 28px; border-radius: 50%; background: var(--green); color: #0b0c0e; display: grid; place-items: center; font-size: 15px; flex: none; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
+  .card h3 { margin: 0 0 6px; font-size: 17px; }
+  .card p { margin: 0 0 14px; color: var(--text2); font-size: 15px; }
+  ul { margin: 0; padding-left: 20px; color: var(--text2); }
+  li { margin: 6px 0; }
+  li b, p b { color: var(--text); }
+  .btn { display: inline-block; width: 100%; border: 0; border-radius: 12px; padding: 13px 18px; font: 600 16px/1 inherit; font-family: inherit; cursor: pointer; }
+  .btn.primary { background: var(--green-dark); color: #fff; }
+  .btn.primary:hover { background: #22ab4f; }
+  .btn.danger { background: transparent; color: var(--error); border: 1.5px solid var(--error); }
+  .btn.danger:hover { background: rgba(241, 94, 108, .1); }
+  .note { margin-top: 12px; font-size: 14px; color: var(--muted); }
+  .note.warn { color: var(--warn); }
+  .alert { display: none; padding: 14px 16px; border-radius: 12px; background: rgba(245, 165, 36, .12); border: 1px solid rgba(245, 165, 36, .4); color: var(--warn); margin-bottom: 20px; }
+  .alert.show { display: block; }
+  a { color: var(--green); }
+  code { background: #26282d; padding: 1px 6px; border-radius: 6px; font-size: 14px; }
+  details { border-top: 1px solid var(--line); padding: 12px 0; }
+  details:last-child { border-bottom: 1px solid var(--line); }
+  summary { cursor: pointer; font-weight: 600; }
+  details p, details ul { margin: 10px 0 0; color: var(--text2); }
+  footer { margin-top: 40px; color: var(--muted); font-size: 13px; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <svg viewBox="0 0 34 30" aria-hidden="true">
+      <polygon fill="#1ed760" points="14.3,0 32,0 20.4,13.2 2,13.2"/>
+      <polygon fill="#1ed760" points="14.3,16.8 32,16.8 20.4,30 2,30"/>
+      <rect fill="#1ed760" x="14.3" y="12" width="4" height="6"/>
+    </svg>
+    <h1>ShiftDeck <span class="version" id="version">v1.2</span></h1>
+  </header>
+  <p class="lead">Grave o firmware no <b>ESP32-2432S028</b> (Cheap Yellow Display) direto pelo navegador. Não precisa instalar nada.</p>
+
+  <div class="alert" id="unsupported">
+    Este navegador não acessa portas USB. Abra esta página no <b>Google Chrome</b> ou <b>Microsoft Edge</b> em um computador (Windows, macOS ou Linux).
+  </div>
+
+  <h2><span class="n">1</span>Conecte a placa</h2>
+  <div class="card">
+    <ul>
+      <li>Use um cabo <b>USB-A → USB-C</b> (ou USB-A → micro-USB) <b>que transfira dados</b>. Cabo USB-C ↔ USB-C <b>não funciona</b> em muitas placas CYD.</li>
+      <li>Ligue numa porta do próprio computador, <b>sem hub ou dock</b>.</li>
+      <li><b>Windows:</b> se a porta não aparecer, instale o driver
+        <a href="https://www.wch-ic.com/downloads/CH341SER_EXE.html" target="_blank" rel="noopener">CH340 (WCH)</a> e reconecte. macOS e Linux já têm o driver.</li>
+    </ul>
+  </div>
+
+  <h2><span class="n">2</span>Instale</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>Atualizar</h3>
+      <p>Para quem já usa o ShiftDeck. Mantém Wi-Fi, conta do Spotify e calibração do toque.</p>
+      <esp-web-install-button manifest="manifest-update.json">
+        <button slot="activate" class="btn primary">Atualizar firmware</button>
+        <span slot="unsupported"></span>
+        <span slot="not-allowed">Abra pela página https.</span>
+      </esp-web-install-button>
+      <p class="note warn">Quando aparecer <b>“Erase device”</b>, deixe a caixa <b>desmarcada</b> e clique em <b>Next</b>.</p>
+    </div>
+    <div class="card">
+      <h3>Instalação completa</h3>
+      <p>Placa nova, ou se a atualização não resolver. <b>Apaga tudo</b>: o ShiftDeck volta para a configuração inicial.</p>
+      <esp-web-install-button manifest="manifest-full.json">
+        <button slot="activate" class="btn danger">Instalar do zero</button>
+        <span slot="unsupported"></span>
+        <span slot="not-allowed">Abra pela página https.</span>
+      </esp-web-install-button>
+      <p class="note">Depois será preciso configurar o Wi-Fi e o Spotify de novo (passo 3).</p>
+    </div>
+  </div>
+  <p class="note">Clique no botão → escolha a porta (<code>USB Serial</code>, <code>CH340</code>, <code>usbserial</code>…) → <b>Conectar</b> → <b>Install</b>. Leva cerca de 1 minuto. Não desconecte durante a gravação.</p>
+
+  <h2><span class="n">3</span>Primeiro uso</h2>
+  <div class="card">
+    <ul>
+      <li>Ao terminar, aperte o botão <b>RST</b> da placa (ou desconecte e reconecte).</li>
+      <li>A tela <b>Inicializando</b> mostra Tela, Touch, Wi-Fi, Backend e Spotify. Tudo verde = pronto.</li>
+      <li>Sem Wi-Fi configurado, a placa cria a rede <b>Shiftdeck-Spotify</b>: escaneie o QR code da tela com o celular e escolha sua rede.</li>
+      <li>Depois, a tela pede as credenciais do Spotify e a autorização da conta, também por QR code.</li>
+      <li>Na tela principal: toque em <b>Wi-Fi</b> para Configurações, em <b>Spotify</b> ou na capa para Playlists, no <b>título da música</b> para Buscar.</li>
+    </ul>
+  </div>
+
+  <h2>Problemas comuns</h2>
+  <details>
+    <summary>A porta da placa não aparece na lista</summary>
+    <ul>
+      <li>Troque o cabo: a maioria dos cabos “de carregar” não tem fios de dados.</li>
+      <li>Se o cabo é USB-C ↔ USB-C, troque por USB-A → USB-C.</li>
+      <li>No Windows, instale o driver CH340 e reconecte.</li>
+    </ul>
+  </details>
+  <details>
+    <summary>“Failed to connect” ou fica em “Connecting…”</summary>
+    <p>Segure o botão <b>BOOT</b> da placa, clique no botão de instalar, escolha a porta e solte o BOOT quando a gravação começar.</p>
+  </details>
+  <details>
+    <summary>Depois de atualizar, pediu Wi-Fi de novo</summary>
+    <p>A caixa “Erase device” foi marcada. Configure pelo QR code (passo 3); a próxima atualização mantém tudo se a caixa ficar desmarcada.</p>
+  </details>
+  <details>
+    <summary>A tela fica branca ou não liga</summary>
+    <p>Use <b>Instalar do zero</b>. Se continuar, a placa pode ser de outra revisão (com outro controlador de tela).</p>
+  </details>
+
+  <footer>ShiftDeck · firmware para ESP32-2432S028 · instalador com <a href="https://esphome.github.io/esp-web-tools/" target="_blank" rel="noopener">ESP Web Tools</a></footer>
+</main>
+<script>
+  if (!("serial" in navigator)) document.getElementById("unsupported").classList.add("show");
+  fetch("manifest-update.json").then(r => r.json()).then(m => {
+    document.getElementById("version").textContent = "v" + m.version.replace(/\.0$/, "");
+  }).catch(() => {});
+</script>
+</body>
+</html>
