@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<!--
+  Step-by-step guide for a ShiftDeck owner to create their own (free) Spotify app and get the
+  Client ID, from a phone. Linked from the board's QR codes and setup page.
+  Illustrations are simplified drawings, not screenshots: Spotify may rename buttons.
+-->
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ShiftDeck - Conectar seu Spotify</title>
+<style>
+:root{--bg:#111316;--card:#1E1F23;--btn:#27292E;--line:#2C2E33;--green:#1ED760;--green-dark:#1F9D48;
+  --text:#fff;--sec:#B3B3B3;--muted:#8A8D93;--warn:#F5A524}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  line-height:1.5;padding:20px 16px 48px}
+main{max-width:520px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px;margin-bottom:18px}
+h1{font-size:24px;line-height:1.25;margin-bottom:8px}
+.lead{color:var(--sec);margin-bottom:18px}
+.need{background:var(--card);border-radius:12px;padding:14px 16px;margin-bottom:22px}
+.need li{margin-left:18px;color:var(--sec)}
+.need b{color:var(--text)}
+.step{background:var(--card);border-radius:14px;padding:18px 16px;margin-bottom:16px}
+.step h2{font-size:17px;display:flex;gap:10px;align-items:center;margin-bottom:8px}
+.n{flex:none;width:28px;height:28px;border-radius:50%;background:var(--green);color:#0B0C0E;
+  display:grid;place-items:center;font-size:15px;font-weight:800}
+.step p,.step li{color:var(--sec);font-size:15px}
+.step ol{margin:6px 0 0 20px}
+.step li{margin-bottom:6px}
+.step b{color:var(--text)}
+.btn{display:block;width:100%;padding:13px;margin-top:12px;border:none;border-radius:10px;font:inherit;
+  font-weight:700;font-size:15px;text-align:center;text-decoration:none;cursor:pointer;color:#fff;background:var(--btn)}
+.btn.primary{background:var(--green-dark)}
+.copy{display:flex;gap:8px;margin-top:10px}
+.copy code{flex:1;min-width:0;background:#0B0C0E;border:1px solid var(--line);border-radius:8px;padding:10px;
+  font:12px Menlo,Consolas,monospace;color:var(--green);overflow-wrap:anywhere}
+.copy .btn{width:auto;margin:0;padding:0 16px;flex:none}
+/* simplified drawings of the Spotify dashboard */
+.mock{margin-top:14px;border:1px solid var(--line);border-radius:10px;padding:12px;background:#16171A;font-size:13px}
+.mock .t{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px}
+.f{margin-bottom:8px}
+.f span{display:block;color:var(--muted);font-size:12px}
+.f div{border:1px solid var(--line);border-radius:6px;padding:7px 9px;color:var(--text);min-height:32px;overflow-wrap:anywhere}
+.hl{outline:2px solid var(--green);outline-offset:2px;border-radius:6px}
+.chk{display:flex;gap:8px;align-items:center;margin-bottom:6px;color:var(--text)}
+.chk i{width:16px;height:16px;border-radius:4px;border:1px solid var(--muted);flex:none}
+.chk i.on{background:var(--green);border-color:var(--green)}
+.fakebtn{display:inline-block;padding:6px 14px;border-radius:999px;background:#fff;color:#000;font-weight:700}
+.tip{border-left:3px solid var(--warn);padding:2px 0 2px 10px;margin-top:12px;color:var(--sec);font-size:14px}
+.done{text-align:center;padding:22px 16px}
+.done h2{justify-content:center}
+details{background:var(--card);border-radius:12px;padding:14px 16px;margin-top:10px}
+summary{cursor:pointer;font-weight:700}
+details p{color:var(--sec);font-size:14px;margin-top:8px}
+a{color:var(--green)}
+footer{color:var(--muted);font-size:12px;text-align:center;margin-top:28px}
+</style>
+</head>
+<body>
+<main>
+  <div class="brand">
+    <svg width="26" height="23" viewBox="0 0 34 30" aria-hidden="true">
+      <polygon fill="#1ED760" points="14.3,0 32,0 20.4,13.2 2,13.2"/>
+      <polygon fill="#1ED760" points="14.3,16.8 32,16.8 20.4,30 2,30"/>
+    </svg>
+    ShiftDeck
+  </div>
+
+  <h1>Conectar o seu Spotify</h1>
+  <p class="lead">A ShiftDeck usa um "app" gratuito que você cria na sua conta Spotify. Leva uns 3 minutos e dá para fazer pelo celular. Você só vai copiar um código: o <b>Client ID</b>.</p>
+
+  <div class="need">
+    <ul>
+      <li>Conta <b>Spotify Premium</b> (exigência do Spotify para controlar a música).</li>
+      <li>Mantenha aberta a página da ShiftDeck (a do QR do <b>Passo 2</b>) para colar o código no final.</li>
+    </ul>
+  </div>
+
+  <section class="step">
+    <h2><span class="n">1</span>Entre no painel de desenvolvedor</h2>
+    <p>Abra o painel e entre com a <b>mesma conta Spotify</b> que vai usar na ShiftDeck. Se for a primeira vez, o Spotify pede para aceitar os termos de desenvolvedor.</p>
+    <a class="btn primary" href="https://developer.spotify.com/dashboard" target="_blank" rel="noopener">Abrir o painel do Spotify</a>
+  </section>
+
+  <section class="step">
+    <h2><span class="n">2</span>Crie o app</h2>
+    <p>Toque em <b>Create app</b> e preencha:</p>
+    <ol>
+      <li><b>App name</b>: ShiftDeck</li>
+      <li><b>App description</b>: Controle da minha ShiftDeck</li>
+      <li><b>Redirect URIs</b>: cole o endereço abaixo e toque em <b>Add</b> (se o botão aparecer).</li>
+      <li>Se perguntar quais APIs vai usar, marque <b>Web API</b>.</li>
+      <li>Marque que concorda com os termos e toque em <b>Save</b>.</li>
+    </ol>
+    <div class="copy">
+      <code id="uri">https://brachynuspro.github.io/shiftdeck-flasher/callback.html</code>
+      <button class="btn" type="button" id="copyUri">Copiar</button>
+    </div>
+    <div class="mock" aria-hidden="true">
+      <div class="t">Create app (ilustração)</div>
+      <div class="f"><span>App name</span><div>ShiftDeck</div></div>
+      <div class="f"><span>App description</span><div>Controle da minha ShiftDeck</div></div>
+      <div class="f hl"><span>Redirect URIs</span><div>https://brachynuspro.github.io/shiftdeck-flasher/callback.html</div></div>
+      <div class="chk"><i class="on"></i>Web API</div>
+      <div class="chk"><i class="on"></i>Concordo com os termos</div>
+      <span class="fakebtn">Save</span>
+    </div>
+    <p class="tip">O endereço precisa ser <b>exatamente</b> esse, sem espaço nem barra no final. Já criou o app antes? Abra ele, toque em <b>Settings</b> e adicione o endereço em Redirect URIs.</p>
+  </section>
+
+  <section class="step">
+    <h2><span class="n">3</span>Copie o Client ID</h2>
+    <p>Depois de salvar, abra o app (se não abrir sozinho, toque no nome dele no painel). O <b>Client ID</b> aparece na página do app ou em <b>Settings</b>. Copie esse código.</p>
+    <div class="mock" aria-hidden="true">
+      <div class="t">Página do app (ilustração)</div>
+      <div class="f hl"><span>Client ID</span><div>3f9a1c7e5b2d4e8f9a0b1c2d3e4f5a6b</div></div>
+      <div class="f"><span>Client secret</span><div>••••••••••••</div></div>
+    </div>
+    <p class="tip">O <b>Client secret</b> não é necessário e não deve ser compartilhado com ninguém.</p>
+  </section>
+
+  <section class="step">
+    <h2><span class="n">4</span>Cole na ShiftDeck</h2>
+    <p>Volte para a página da ShiftDeck (a do QR do Passo 2), cole o Client ID e toque em <b>Salvar e Conectar</b>. A ShiftDeck reinicia e mostra o <b>Passo 3</b>: escaneie o QR e toque em <b>Autorizar Spotify</b>.</p>
+  </section>
+
+  <section class="step done">
+    <h2>Pronto!</h2>
+    <p>A música que está tocando aparece na tela. Nada disso precisa ser feito de novo.</p>
+  </section>
+
+  <h2 style="font-size:17px;margin:26px 0 4px">Deu algum problema?</h2>
+  <details>
+    <summary>"INVALID_CLIENT: Invalid redirect URI"</summary>
+    <p>O endereço em Redirect URIs está diferente. Abra o app, toque em Settings, apague o endereço e cole de novo com o botão Copiar do passo 2. Não esqueça de salvar.</p>
+  </details>
+  <details>
+    <summary>Outra pessoa da casa quer usar a ShiftDeck</summary>
+    <p>O ideal é ela criar o próprio app com este mesmo guia, na conta dela, e entrar em Configurações › Conta Spotify › Sair da conta na ShiftDeck. Outra opção: no seu app, toque em Settings › Users Management e adicione o nome e o e-mail Spotify dela (até 5 pessoas).</p>
+  </details>
+  <details>
+    <summary>Conectou, mas não toca ou não pula música</summary>
+    <p>A conta precisa ser Premium, e precisa ter o Spotify aberto em algum aparelho (celular, computador ou caixa de som) pelo menos uma vez.</p>
+  </details>
+
+  <footer>ShiftDeck · <a href="https://github.com/brachynuspro/shiftdeck">guia completo e código</a> · Spotify é marca da Spotify AB; este projeto não é afiliado ao Spotify.</footer>
+</main>
+<script>
+document.getElementById("copyUri").onclick = function () {
+  var b = this, t = document.getElementById("uri").textContent;
+  navigator.clipboard.writeText(t).then(function () { b.textContent = "Copiado!"; },
+    function () { b.textContent = "Selecione"; });
+};
+</script>
+</body>
+</html>
