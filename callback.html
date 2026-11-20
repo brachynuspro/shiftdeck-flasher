@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!--
+  Spotify login return page for ShiftDeck (replaces the old Google Apps Script bridge).
+  Spotify only redirects to public HTTPS addresses, and the board serves plain HTTP on the
+  home network, so Spotify sends the browser here with ?code=...&state=<board IP> and this
+  page sends it on to http://<board IP>/code. Nothing is stored or sent anywhere else.
+  The code is useless without the Client Secret, which only the board has.
+  Redirect URI to register in the Spotify app: https://brachynuspro.github.io/shiftdeck-flasher/callback.html
+-->
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>ShiftDeck - Conectando ao Spotify</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#111316;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px}
+.card{background:#1E1F23;border-radius:14px;padding:28px 24px;width:100%;max-width:420px;text-align:center}
+.logo{color:#1ED760;font-size:24px;font-weight:700;margin-bottom:10px}
+h1{font-size:18px;margin-bottom:8px}
+p{color:#B3B3B3;font-size:14px;line-height:1.5;margin-bottom:18px}
+.ip{color:#1ED760;font-family:Menlo,Consolas,monospace}
+.code{background:#0B0C0E;border:1px solid #2C2E33;border-radius:8px;padding:12px;margin-bottom:16px;
+  font-family:Menlo,Consolas,monospace;font-size:12px;color:#1ED760;word-break:break-all;
+  max-height:110px;overflow-y:auto;text-align:left;user-select:all;-webkit-user-select:all}
+.btn{display:block;width:100%;padding:14px;border-radius:10px;font-size:16px;font-weight:700;
+  border:none;cursor:pointer;margin-bottom:10px;text-decoration:none;font-family:inherit}
+.primary{background:#1F9D48;color:#fff}
+.secondary{background:#27292E;color:#fff}
+.err{color:#F15E6C}
+.hidden{display:none}
+.foot{color:#8A8D93;font-size:11px;margin-top:14px;line-height:1.4}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">ShiftDeck</div>
+  <div id="ok" class="hidden">
+    <h1>Autorizado!</h1>
+    <p>Voltando para a ShiftDeck em <span class="ip" id="ip"></span>...</p>
+    <a class="btn primary" id="go">Abrir a ShiftDeck</a>
+    <button class="btn secondary" id="copy" type="button">Copiar código</button>
+    <div class="code" id="code"></div>
+    <div class="foot">Se a página da ShiftDeck não abrir, confira se o celular está no mesmo Wi-Fi.
+      Ou copie o código e cole na página da ShiftDeck.</div>
+  </div>
+  <div id="fail" class="hidden">
+    <h1 class="err">Não deu certo</h1>
+    <p id="why"></p>
+    <div class="foot">Volte para a página da ShiftDeck e toque em Autorizar Spotify de novo.</div>
+  </div>
+</div>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  var code = q.get("code") || "", ip = q.get("state") || "", err = q.get("error");
+  // Only addresses on a home network: keeps this page from redirecting anywhere else.
+  var lan = /^(10\.\d{1,3}|172\.(1[6-9]|2\d|3[01])|192\.168)\.\d{1,3}\.\d{1,3}$/.test(ip);
+  function show(id) { document.getElementById(id).classList.remove("hidden"); }
+  if (err || !code || !lan) {
+    document.getElementById("why").textContent =
+      err === "access_denied" ? "A autorização foi cancelada no Spotify." :
+      !lan ? "Endereço da ShiftDeck inválido." : "O Spotify não enviou o código.";
+    show("fail");
+    return;
+  }
+  var target = "http://" + ip + "/code?code=" + encodeURIComponent(code);
+  document.getElementById("ip").textContent = ip;
+  document.getElementById("code").textContent = code;
+  document.getElementById("go").href = target;
+  document.getElementById("copy").onclick = function () {
+    var b = this;
+    navigator.clipboard.writeText(code).then(function () { b.textContent = "Copiado!"; },
+                                             function () { b.textContent = "Selecione o código abaixo"; });
+  };
+  show("ok");
+  setTimeout(function () { location.href = target; }, 1500);
+})();
+</script>
+</body>
+</html>
