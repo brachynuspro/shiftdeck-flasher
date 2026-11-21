@@ -39,7 +39,7 @@
   .alert { display: none; padding: 14px 16px; border-radius: 12px; background: rgba(245, 165, 36, .12); border: 1px solid rgba(245, 165, 36, .4); color: var(--warn); margin-bottom: 20px; }
   .alert.show { display: block; }
   a { color: var(--green); }
-  code { background: #26282d; padding: 1px 6px; border-radius: 6px; font-size: 14px; }
+  code { background: #26282d; padding: 1px 6px; border-radius: 6px; font-size: 14px; overflow-wrap: anywhere; }
   details { border-top: 1px solid var(--line); padding: 12px 0; }
   details:last-child { border-bottom: 1px solid var(--line); }
   summary { cursor: pointer; font-weight: 600; }
@@ -131,6 +131,13 @@
     <summary>A tela fica branca ou não liga</summary>
     <p>Use <b>Instalar do zero</b>. Se continuar, a placa pode ser de outra revisão (com outro controlador de tela).</p>
   </details>
+
+  <section class="donate" style="text-align:center;margin:28px 0 8px">
+    <h2 style="font-size:18px;margin-bottom:6px">Apoie o projeto</h2>
+    <p style="color:#B3B3B3;font-size:14px;margin-bottom:12px">A ShiftDeck é gratuita e de código aberto. Se ela te ajudou, qualquer valor ajuda a continuar o desenvolvimento.</p>
+    <a class="btn primary" style="max-width:320px" href="https://www.paypal.com/donate/?hosted_button_id=Q3SECNZ9V6744" target="_blank" rel="noopener">Doar com PayPal</a>
+    <div style="margin-top:14px"><img src="doar-paypal-qr.png" width="150" height="150" alt="QR code para doar com PayPal" style="border-radius:8px"></div>
+  </section>
 
   <footer>ShiftDeck · firmware para ESP32-2432S028 · instalador com <a href="https://esphome.github.io/esp-web-tools/" target="_blank" rel="noopener">ESP Web Tools</a></footer>
 </main>
